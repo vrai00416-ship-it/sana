@@ -15,8 +15,15 @@
     --gold-dark: #C47F0A;
     --black: #0A0A0A;
     --dark: #111111;
-    --card-bg: #181818;
-    --card-border: #2A2A2A;
+    --glass-bg: rgba(255,255,255,0.04);
+    --glass-bg-strong: rgba(255,255,255,0.07);
+    --glass-border: rgba(255,255,255,0.10);
+    --glass-border-gold: rgba(245,166,35,0.28);
+    --glass-shadow: 0 8px 32px rgba(0,0,0,0.4);
+    --glass-blur: blur(20px);
+    --glass-blur-heavy: blur(32px);
+    --card-bg: rgba(255,255,255,0.04);
+    --card-border: rgba(255,255,255,0.09);
     --text: #F0F0F0;
     --muted: #888888;
     --red-accent: #FF3B3B;
@@ -35,28 +42,32 @@
     font-size: 16px;
     line-height: 1.5;
     padding-bottom: 100px;
+    background-image:
+      radial-gradient(ellipse at 20% 0%, rgba(245,166,35,0.06) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 100%, rgba(245,166,35,0.04) 0%, transparent 50%);
   }
 
   /* ── TOP BAR ── */
   .top-bar {
-    background: var(--gold);
-    color: var(--black);
+    background: rgba(245,166,35,0.13);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    border-bottom: 1px solid var(--glass-border-gold);
+    color: var(--gold-light);
     text-align: center;
     padding: 10px 16px;
     font-size: 13px;
     font-weight: 700;
     letter-spacing: 0.5px;
-    animation: pulse-bar 2s ease-in-out infinite alternate;
+    position: sticky;
+    top: 0;
+    z-index: 90;
   }
-  @keyframes pulse-bar {
-    from { background: var(--gold); }
-    to { background: var(--gold-light); }
-  }
-  .top-bar span { font-weight: 900; }
+  .top-bar span { font-weight: 900; color: #fff; }
 
   /* ── HERO ── */
   .hero {
-    background: linear-gradient(180deg, #1a1200 0%, var(--black) 100%);
+    background: linear-gradient(180deg, rgba(26,18,0,0.8) 0%, transparent 100%);
     padding: 28px 20px 32px;
     text-align: center;
     position: relative;
@@ -75,8 +86,10 @@
 
   .hero-badge {
     display: inline-block;
-    background: rgba(245,166,35,0.15);
-    border: 1px solid var(--gold);
+    background: rgba(245,166,35,0.10);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    border: 1px solid var(--glass-border-gold);
     color: var(--gold);
     font-size: 11px;
     font-weight: 700;
@@ -138,16 +151,6 @@
     position: relative;
   }
 
-  .hero-silhouette {
-    width: 180px;
-    height: 240px;
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  /* Decorative gym figure SVG inline */
   .hero-img-placeholder::after {
     content: '';
     position: absolute;
@@ -158,54 +161,49 @@
 
   .floating-badge {
     position: absolute;
-    background: var(--gold);
-    color: var(--black);
+    background: rgba(20,14,0,0.55);
+    backdrop-filter: var(--glass-blur-heavy);
+    -webkit-backdrop-filter: var(--glass-blur-heavy);
+    border: 1px solid var(--glass-border-gold);
+    color: #fff;
     font-weight: 900;
     font-size: 13px;
     padding: 8px 14px;
-    border-radius: 12px;
-    box-shadow: 0 4px 20px rgba(245,166,35,0.4);
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.08);
   }
 
   .floating-badge.left { bottom: 40px; left: 20px; transform: rotate(-3deg); }
   .floating-badge.right { top: 30px; right: 20px; transform: rotate(2deg); }
-  .floating-badge small { display: block; font-size: 10px; font-weight: 600; }
+  .floating-badge small { display: block; font-size: 10px; font-weight: 600; color: var(--gold-light); }
 
   /* ── CTA BUTTON ── */
   .btn-primary {
     display: block;
     width: 100%;
     padding: 18px 24px;
-    background: var(--gold);
+    background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 50%, var(--gold) 100%);
+    background-size: 200% 100%;
     color: var(--black);
     font-family: 'Outfit', sans-serif;
     font-size: 17px;
     font-weight: 900;
     text-align: center;
     border: none;
-    border-radius: 14px;
+    border-radius: 18px;
     cursor: pointer;
     text-decoration: none;
     letter-spacing: 0.3px;
-    transition: all 0.2s;
+    transition: all 0.3s;
     position: relative;
     overflow: hidden;
-    box-shadow: 0 6px 28px rgba(245,166,35,0.4);
+    box-shadow: 0 8px 32px rgba(245,166,35,0.35), inset 0 1px 0 rgba(255,255,255,0.3);
+    animation: btn-shimmer 3s linear infinite;
   }
 
-  .btn-primary::before {
-    content: '';
-    position: absolute;
-    top: 0; left: -100%;
-    width: 60%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
-    animation: shimmer 2.5s infinite;
-  }
-
-  @keyframes shimmer {
-    0% { left: -100%; }
-    100% { left: 200%; }
+  @keyframes btn-shimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
   }
 
   .btn-primary:active { transform: scale(0.98); }
@@ -214,14 +212,16 @@
     display: block;
     width: 100%;
     padding: 14px 24px;
-    background: transparent;
+    background: rgba(245,166,35,0.07);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
     color: var(--gold);
     font-family: 'Outfit', sans-serif;
     font-size: 15px;
     font-weight: 700;
     text-align: center;
-    border: 1.5px solid var(--gold);
-    border-radius: 14px;
+    border: 1.5px solid var(--glass-border-gold);
+    border-radius: 18px;
     cursor: pointer;
     text-decoration: none;
     letter-spacing: 0.3px;
@@ -238,12 +238,15 @@
 
   /* ── COUNTDOWN ── */
   .countdown-section {
-    background: var(--card-bg);
-    border: 1px solid var(--card-border);
-    border-radius: 20px;
+    background: var(--glass-bg);
+    backdrop-filter: var(--glass-blur-heavy);
+    -webkit-backdrop-filter: var(--glass-blur-heavy);
+    border: 1px solid var(--glass-border);
+    border-radius: 24px;
     padding: 20px;
     margin: 0 16px 28px;
     text-align: center;
+    box-shadow: var(--glass-shadow), inset 0 1px 0 rgba(255,255,255,0.06);
   }
 
   .countdown-label {
@@ -265,11 +268,14 @@
   }
 
   .cd-unit {
-    background: #0A0A0A;
-    border: 1px solid var(--card-border);
-    border-radius: 10px;
+    background: rgba(0,0,0,0.35);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    border: 1px solid var(--glass-border);
+    border-radius: 14px;
     padding: 10px 14px;
     min-width: 58px;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.04);
   }
 
   .cd-num {
@@ -313,13 +319,14 @@
     display: flex;
     justify-content: space-around;
     padding: 24px 16px;
-    border-top: 1px solid var(--card-border);
-    border-bottom: 1px solid var(--card-border);
+    background: var(--glass-bg);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    border-top: 1px solid var(--glass-border);
+    border-bottom: 1px solid var(--glass-border);
     margin-bottom: 36px;
     text-align: center;
   }
-
-  .sp-item {}
 
   .sp-num {
     font-family: 'Bebas Neue', sans-serif;
@@ -338,7 +345,7 @@
 
   .sp-divider {
     width: 1px;
-    background: var(--card-border);
+    background: var(--glass-border);
     align-self: stretch;
   }
 
@@ -369,24 +376,33 @@
 
   /* ── BENEFITS ── */
   .benefit-card {
-    background: var(--card-bg);
-    border: 1px solid var(--card-border);
-    border-radius: 16px;
+    background: var(--glass-bg);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
     padding: 18px 20px;
     margin-bottom: 12px;
     display: flex;
     gap: 16px;
     align-items: flex-start;
-    transition: border-color 0.2s;
+    transition: all 0.25s;
+    box-shadow: var(--glass-shadow), inset 0 1px 0 rgba(255,255,255,0.05);
   }
 
-  .benefit-card:active { border-color: var(--gold); }
+  .benefit-card:active, .benefit-card:hover {
+    border-color: var(--glass-border-gold);
+    background: rgba(245,166,35,0.05);
+    transform: translateY(-1px);
+  }
 
   .benefit-icon {
     width: 44px;
     height: 44px;
-    background: rgba(245,166,35,0.12);
-    border-radius: 12px;
+    background: rgba(245,166,35,0.10);
+    backdrop-filter: var(--glass-blur);
+    border: 1px solid var(--glass-border-gold);
+    border-radius: 14px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -409,12 +425,18 @@
 
   /* ── TRANSFORMATIONS ── */
   .transform-card {
-    background: var(--card-bg);
-    border: 1px solid var(--card-border);
-    border-radius: 20px;
+    background: var(--glass-bg);
+    backdrop-filter: var(--glass-blur-heavy);
+    -webkit-backdrop-filter: var(--glass-blur-heavy);
+    border: 1px solid var(--glass-border);
+    border-radius: 24px;
     padding: 20px;
     margin-bottom: 16px;
+    box-shadow: var(--glass-shadow), inset 0 1px 0 rgba(255,255,255,0.06);
+    transition: border-color 0.25s;
   }
+
+  .transform-card:hover { border-color: var(--glass-border-gold); }
 
   .transform-header {
     display: flex;
@@ -435,6 +457,7 @@
     font-size: 20px;
     color: var(--black);
     flex-shrink: 0;
+    box-shadow: 0 4px 16px rgba(245,166,35,0.3);
   }
 
   .transform-name { font-size: 15px; font-weight: 700; color: #fff; }
@@ -443,9 +466,11 @@
   .stars { color: var(--gold); font-size: 14px; letter-spacing: 1px; }
 
   .transform-result {
-    background: rgba(34,197,94,0.1);
-    border: 1px solid rgba(34,197,94,0.25);
-    border-radius: 10px;
+    background: rgba(34,197,94,0.06);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    border: 1px solid rgba(34,197,94,0.2);
+    border-radius: 14px;
     padding: 10px 14px;
     margin-bottom: 14px;
     display: flex;
@@ -472,21 +497,25 @@
 
   /* ── PRICING ── */
   .pricing-card {
-    background: var(--card-bg);
-    border: 2px solid var(--gold);
-    border-radius: 24px;
+    background: var(--glass-bg-strong);
+    backdrop-filter: var(--glass-blur-heavy);
+    -webkit-backdrop-filter: var(--glass-blur-heavy);
+    border: 1.5px solid var(--glass-border-gold);
+    border-radius: 28px;
     padding: 28px 24px;
     position: relative;
     overflow: hidden;
     margin-bottom: 16px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.08);
   }
 
   .pricing-card::before {
     content: '';
     position: absolute;
     top: -40px; right: -40px;
-    width: 160px; height: 160px;
-    background: radial-gradient(circle, rgba(245,166,35,0.12), transparent 70%);
+    width: 200px; height: 200px;
+    background: radial-gradient(circle, rgba(245,166,35,0.10), transparent 70%);
+    pointer-events: none;
   }
 
   .pricing-badge {
@@ -500,6 +529,7 @@
     text-transform: uppercase;
     padding: 5px 12px;
     border-radius: 100px;
+    box-shadow: 0 4px 12px rgba(245,166,35,0.4);
   }
 
   .pricing-plan {
@@ -541,12 +571,14 @@
   .price-period { font-size: 14px; color: var(--muted); }
 
   .price-save {
-    background: rgba(34,197,94,0.15);
+    background: rgba(34,197,94,0.10);
+    backdrop-filter: var(--glass-blur);
+    border: 1px solid rgba(34,197,94,0.2);
     color: var(--green);
     font-size: 13px;
     font-weight: 700;
     padding: 5px 12px;
-    border-radius: 8px;
+    border-radius: 10px;
     display: inline-block;
     margin-bottom: 20px;
   }
@@ -555,7 +587,7 @@
 
   .features-list li {
     padding: 9px 0;
-    border-bottom: 1px solid var(--card-border);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
     font-size: 14px;
     color: #ccc;
     display: flex;
@@ -575,15 +607,21 @@
 
   /* ── MINI PRICING CARD ── */
   .pricing-mini {
-    background: var(--card-bg);
-    border: 1px solid var(--card-border);
-    border-radius: 16px;
+    background: var(--glass-bg);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    border: 1px solid var(--glass-border);
+    border-radius: 18px;
     padding: 18px 20px;
     margin-bottom: 12px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    transition: border-color 0.2s;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.04);
   }
+
+  .pricing-mini:hover { border-color: var(--glass-border-gold); }
 
   .pricing-mini .plan-name { font-size: 14px; font-weight: 700; color: #fff; }
   .pricing-mini .plan-sub { font-size: 12px; color: var(--muted); }
@@ -591,7 +629,7 @@
 
   /* ── FAQ ── */
   .faq-item {
-    border-bottom: 1px solid var(--card-border);
+    border-bottom: 1px solid rgba(255,255,255,0.07);
     padding: 18px 0;
   }
 
@@ -609,7 +647,9 @@
   .faq-icon {
     width: 26px;
     height: 26px;
-    background: rgba(245,166,35,0.15);
+    background: rgba(245,166,35,0.10);
+    backdrop-filter: var(--glass-blur);
+    border: 1px solid var(--glass-border-gold);
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -643,8 +683,10 @@
   }
 
   .trust-pill {
-    background: var(--card-bg);
-    border: 1px solid var(--card-border);
+    background: var(--glass-bg);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    border: 1px solid var(--glass-border);
     border-radius: 100px;
     padding: 8px 14px;
     font-size: 12px;
@@ -653,6 +695,7 @@
     display: flex;
     align-items: center;
     gap: 6px;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.04);
   }
 
   .trust-pill span { font-size: 14px; }
@@ -664,12 +707,13 @@
     transform: translateX(-50%);
     width: 100%;
     max-width: 480px;
-    background: rgba(10,10,10,0.95);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    background: rgba(10,10,10,0.72);
+    backdrop-filter: var(--glass-blur-heavy);
+    -webkit-backdrop-filter: var(--glass-blur-heavy);
     padding: 14px 20px 20px;
-    border-top: 1px solid var(--card-border);
+    border-top: 1px solid var(--glass-border);
     z-index: 100;
+    box-shadow: 0 -8px 32px rgba(0,0,0,0.5);
   }
 
   .sticky-inner {
@@ -689,13 +733,14 @@
     font-weight: 900;
     font-size: 14px;
     border: none;
-    border-radius: 12px;
+    border-radius: 14px;
     padding: 12px 20px;
     cursor: pointer;
     white-space: nowrap;
     text-decoration: none;
     display: inline-block;
     flex-shrink: 0;
+    box-shadow: 0 4px 20px rgba(245,166,35,0.4);
     animation: bounce-cta 3s ease-in-out infinite;
   }
 
@@ -716,12 +761,15 @@
   .wa-btn {
     width: 54px;
     height: 54px;
-    background: #25D366;
+    background: rgba(37,211,102,0.80);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
     border-radius: 50%;
+    border: 1px solid rgba(37,211,102,0.4);
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 4px 20px rgba(37,211,102,0.4);
+    box-shadow: 0 8px 24px rgba(37,211,102,0.35);
     text-decoration: none;
     animation: wa-pulse 2s ease-in-out infinite;
   }
@@ -733,12 +781,16 @@
 
   .wa-btn svg { width: 30px; height: 30px; }
 
-  /* ── LOGO / NAV ── */
+  /* ── NAV ── */
   .nav {
     padding: 16px 20px;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    background: rgba(10,10,10,0.6);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    border-bottom: 1px solid var(--glass-border);
   }
 
   .logo {
@@ -755,42 +807,27 @@
     color: var(--gold);
     font-weight: 700;
     text-decoration: none;
-    border: 1px solid var(--gold);
+    background: rgba(245,166,35,0.09);
+    backdrop-filter: var(--glass-blur);
+    border: 1px solid var(--glass-border-gold);
     padding: 6px 14px;
     border-radius: 100px;
+    transition: background 0.2s;
   }
+
+  .nav-call:hover { background: rgba(245,166,35,0.18); }
 
   /* ── MISC ── */
-  .divider-text {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    color: var(--muted);
-    font-size: 12px;
-    padding: 0 20px;
-    margin: -12px 0 24px;
-  }
-
-  .divider-text::before, .divider-text::after {
-    content: '';
-    flex: 1;
-    height: 1px;
-    background: var(--card-border);
-  }
-
-  .section-divider {
-    height: 1px;
-    background: var(--card-border);
-    margin: 8px 20px 40px;
-  }
-
   .highlight-box {
-    background: rgba(245,166,35,0.08);
-    border: 1px solid rgba(245,166,35,0.3);
-    border-radius: 16px;
+    background: rgba(245,166,35,0.05);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    border: 1px solid var(--glass-border-gold);
+    border-radius: 20px;
     padding: 20px;
     margin: 0 0 28px;
     text-align: center;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.04);
   }
 
   .highlight-box-title {
@@ -803,9 +840,11 @@
   .highlight-box-sub { font-size: 14px; color: #bbb; }
 
   .risk-free {
-    background: rgba(34,197,94,0.08);
-    border: 1px solid rgba(34,197,94,0.25);
-    border-radius: 14px;
+    background: rgba(34,197,94,0.05);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    border: 1px solid rgba(34,197,94,0.2);
+    border-radius: 18px;
     padding: 16px 20px;
     margin-bottom: 20px;
     display: flex;
@@ -817,7 +856,6 @@
   .risk-title { font-size: 15px; font-weight: 700; color: #fff; margin-bottom: 4px; }
   .risk-sub { font-size: 13px; color: #aaa; }
 
-  /* Entrance animations */
   @keyframes fadeUp {
     from { opacity: 0; transform: translateY(20px); }
     to { opacity: 1; transform: translateY(0); }
@@ -829,19 +867,16 @@
   .delay-3 { animation-delay: 0.4s; opacity: 0; }
   .delay-4 { animation-delay: 0.55s; opacity: 0; }
 
-  /* Intersection observer classes */
   .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
   .reveal.visible { opacity: 1; transform: translateY(0); }
 </style>
 </head>
 <body>
 
-<!-- TOP URGENCY BAR -->
 <div class="top-bar">
   🔥 Gurugram's Most Trusted Personal Trainer — Only <span id="spots-left">5</span> Spots Left!
 </div>
 
-<!-- NAV -->
 <nav class="nav fade-up">
   <div class="logo">SANA <span>RAJPUT</span></div>
   <div style="display:flex;gap:10px;align-items:center;">
@@ -852,11 +887,10 @@
         <circle cx="17.5" cy="6.5" r="1" fill="#F5A623"/>
       </svg>
     </a>
-    <a href="tel:+918800726551" class="nav-call">📞 Call Now</a>
+    <a href="tel:+918882555822" class="nav-call">📞 Call Now</a>
   </div>
 </nav>
 
-<!-- HERO -->
 <section class="hero">
   <div class="hero-badge fade-up delay-1">✦ Gurugram's #1 Personal Fitness Trainer</div>
   <p class="hero-name fade-up delay-2">Sana Rajput Fitness</p>
@@ -865,37 +899,23 @@
     <em>BODY</em>
   </h1>
   <p class="hero-sub fade-up delay-4">
-    <strong>55+ women in Gurugram already lost 10–12 kg</strong> in 4 months with expert 1-on-1 personal training, customized diet plans & daily support.
+    <strong>55+ women in Gurugram already lost 10–12 kg</strong> in 4 months with expert 1-on-1 personal training, customized diet plans &amp; daily support.
   </p>
 
-  <!-- Hero graphic -->
   <div class="hero-img-wrap fade-up delay-4">
     <div class="hero-img-placeholder">
       <svg viewBox="0 0 300 260" width="300" height="260" xmlns="http://www.w3.org/2000/svg">
-        <!-- Background glow rings -->
         <circle cx="150" cy="130" r="120" fill="none" stroke="rgba(245,166,35,0.08)" stroke-width="1"/>
         <circle cx="150" cy="130" r="90" fill="none" stroke="rgba(245,166,35,0.12)" stroke-width="1"/>
         <circle cx="150" cy="130" r="60" fill="none" stroke="rgba(245,166,35,0.18)" stroke-width="1"/>
-        <!-- Stylized figure -->
-        <!-- Head -->
         <circle cx="150" cy="55" r="22" fill="rgba(245,166,35,0.9)"/>
-        <!-- Body -->
         <rect x="131" y="80" width="38" height="70" rx="8" fill="rgba(245,166,35,0.75)"/>
-        <!-- Left arm with dumbbell -->
         <rect x="100" y="82" width="30" height="11" rx="5" fill="rgba(245,166,35,0.6)"/>
         <rect x="89" y="76" width="12" height="23" rx="5" fill="rgba(245,166,35,0.7)"/>
-        <!-- Right arm with dumbbell -->
         <rect x="180" y="82" width="30" height="11" rx="5" fill="rgba(245,166,35,0.6)"/>
         <rect x="210" y="76" width="12" height="23" rx="5" fill="rgba(245,166,35,0.7)"/>
-        <!-- Legs -->
         <rect x="131" y="150" width="17" height="60" rx="6" fill="rgba(245,166,35,0.65)"/>
         <rect x="151" y="150" width="17" height="60" rx="6" fill="rgba(245,166,35,0.65)"/>
-        <!-- Stars/energy lines -->
-        <line x1="65" y1="60" x2="90" y2="75" stroke="rgba(245,166,35,0.4)" stroke-width="1.5"/>
-        <line x1="65" y1="80" x2="93" y2="85" stroke="rgba(245,166,35,0.3)" stroke-width="1.5"/>
-        <line x1="235" y1="60" x2="210" y2="75" stroke="rgba(245,166,35,0.4)" stroke-width="1.5"/>
-        <line x1="235" y1="80" x2="207" y2="85" stroke="rgba(245,166,35,0.3)" stroke-width="1.5"/>
-        <!-- STRONG text -->
         <text x="150" y="245" text-anchor="middle" font-family="'Bebas Neue', sans-serif" font-size="32" fill="rgba(245,166,35,0.25)" letter-spacing="8">STRONG</text>
       </svg>
       <div class="floating-badge right">🏆 4 Month<small>Program</small></div>
@@ -903,14 +923,12 @@
     </div>
   </div>
 
-  <!-- Hero CTA -->
-  <a href="https://wa.me/918800726551?text=Hi%20Sana%20Ma%27am%2C%20I%20need%20personal%20training%20in%20Gurugram.%20Can%20you%20please%20tell%20me%20about%20your%20program%20and%20fees%3F" class="btn-primary fade-up">
+  <a href="https://wa.me/918882555822?text=Hi%20Sana%20Ma%27am%2C%20I%20need%20personal%20training%20in%20Gurugram.%20Can%20you%20please%20tell%20me%20about%20your%20program%20and%20fees%3F" class="btn-primary fade-up">
     🚀 Book FREE Consultation on WhatsApp
   </a>
   <p class="btn-note fade-up">No fees • No commitment • Reply in minutes</p>
 </section>
 
-<!-- COUNTDOWN TIMER -->
 <div class="countdown-section reveal">
   <p class="countdown-label">Offer Expires In</p>
   <div class="countdown-digits">
@@ -932,7 +950,6 @@
   <p class="countdown-offer">Get a <strong>FREE Diet Plan</strong> + Free Consultation when you message today</p>
 </div>
 
-<!-- SOCIAL PROOF NUMBERS -->
 <div class="social-proof reveal">
   <div class="sp-item">
     <div class="sp-num">55+</div>
@@ -950,7 +967,6 @@
   </div>
 </div>
 
-<!-- WHAT YOU GET -->
 <section class="section reveal">
   <p class="section-eyebrow">What You Get</p>
   <h2 class="section-title">EVERYTHING TO<br><em>WIN</em></h2>
@@ -988,10 +1004,10 @@
   </div>
 
   <div class="benefit-card">
-    <div class="benefit-icon">🧘</div>
+    <div class="benefit-icon">🍑</div>
     <div>
-      <p class="benefit-title">Yoga & Flexibility Sessions</p>
-      <p class="benefit-desc">Included group yoga classes for stress relief, flexibility and hormonal balance.</p>
+      <p class="benefit-title">Glutes &amp; Core Sculpting</p>
+      <p class="benefit-desc">Targeted glutes, core and full-body toning sessions for visible shape and strength — not just weight loss.</p>
     </div>
   </div>
 
@@ -1004,7 +1020,6 @@
   </div>
 </section>
 
-<!-- HIGHLIGHT BOX -->
 <div class="section reveal">
   <div class="highlight-box">
     <div class="highlight-box-title">55 Gurugram Women Lost 10–12 kg</div>
@@ -1012,11 +1027,93 @@
   </div>
 </div>
 
-<!-- TESTIMONIALS -->
+<!-- REAL CLIENT TESTIMONIALS -->
 <section class="section reveal">
   <p class="section-eyebrow">Real Results</p>
   <h2 class="section-title">WOMEN WHO<br><em>WON</em></h2>
 
+  <!-- Kaira -->
+  <div class="transform-card">
+    <div class="transform-header">
+      <div class="avatar">KA</div>
+      <div>
+        <p class="transform-name">Kaira</p>
+        <p class="transform-meta">Gurugram • 4-Month Program</p>
+        <div class="stars">★★★★★</div>
+      </div>
+    </div>
+    <div class="transform-result">
+      <div class="result-item">
+        <div class="result-num">-10 kg</div>
+        <div class="result-label">Fat Loss</div>
+      </div>
+      <div class="result-item">
+        <div class="result-num">💪</div>
+        <div class="result-label">Muscle Gain</div>
+      </div>
+      <div class="result-item">
+        <div class="result-num">4 mo</div>
+        <div class="result-label">Time Taken</div>
+      </div>
+    </div>
+    <p class="transform-quote">"10kg fat loss aur saath mein muscle gain bhi — yeh combination maine pehle kabhi nahi socha tha. Sana ma'am ka program ne mera poora body transform kar diya!"</p>
+  </div>
+
+  <!-- Mona Kaushik -->
+  <div class="transform-card">
+    <div class="transform-header">
+      <div class="avatar">MK</div>
+      <div>
+        <p class="transform-name">Mona Kaushik</p>
+        <p class="transform-meta">Gurugram • 4-Month Program</p>
+        <div class="stars">★★★★★</div>
+      </div>
+    </div>
+    <div class="transform-result">
+      <div class="result-item">
+        <div class="result-num">-8 kg</div>
+        <div class="result-label">Weight Lost</div>
+      </div>
+      <div class="result-item">
+        <div class="result-num">Inches</div>
+        <div class="result-label">Off Waist</div>
+      </div>
+      <div class="result-item">
+        <div class="result-num">4 mo</div>
+        <div class="result-label">Time Taken</div>
+      </div>
+    </div>
+    <p class="transform-quote">"8kg gaye aur waist, thighs aur glutes se inches bhi nikle. Ab main apne purane kapde mein fit ho gayi hoon. Ghar ka khana hi tha diet mein — koi supplement nahi!"</p>
+  </div>
+
+  <!-- Ruchika -->
+  <div class="transform-card">
+    <div class="transform-header">
+      <div class="avatar">RU</div>
+      <div>
+        <p class="transform-name">Ruchika</p>
+        <p class="transform-meta">C-Section Patient • Knee Injury • 5-Month Journey</p>
+        <div class="stars">★★★★★</div>
+      </div>
+    </div>
+    <div class="transform-result">
+      <div class="result-item">
+        <div class="result-num">-8 kg</div>
+        <div class="result-label">Weight Lost</div>
+      </div>
+      <div class="result-item">
+        <div class="result-num">💪</div>
+        <div class="result-label">Strength Gained</div>
+      </div>
+      <div class="result-item">
+        <div class="result-num">5 mo</div>
+        <div class="result-label">Time Taken</div>
+      </div>
+    </div>
+    <p class="transform-quote">"C-section ke baad aur knee injury ke saath main bilkul frustrated thi. Sana ma'am ne baby steps se shuru karaya. 5 months mein 8kg lose kiya aur itni strength aayi — khud pe yakeen nahi hota!"</p>
+  </div>
+
+  <!-- Priya Rawat -->
   <div class="transform-card">
     <div class="transform-header">
       <div class="avatar">PR</div>
@@ -1032,86 +1129,33 @@
         <div class="result-label">Weight Lost</div>
       </div>
       <div class="result-item">
-        <div class="result-num">-6"</div>
-        <div class="result-label">Waist Size</div>
+        <div class="result-num">Waist</div>
+        <div class="result-label">&amp; Glutes</div>
       </div>
       <div class="result-item">
-        <div class="result-num">45 days</div>
+        <div class="result-num">4 mo</div>
         <div class="result-label">Time Taken</div>
       </div>
     </div>
-    <p class="transform-quote">"Mujhe pehle lagta tha yeh mere liye possible nahi hai. Sana ma'am ne mera confidence waapas diya. Ab main apni purani sarees mein fit aa jaati hoon!"</p>
-  </div>
-
-  <div class="transform-card">
-    <div class="transform-header">
-      <div class="avatar">NS</div>
-      <div>
-        <p class="transform-name">Nisha Srivastava</p>
-        <p class="transform-meta">Teacher, 28 • Sector 29, Gurugram</p>
-        <div class="stars">★★★★★</div>
-      </div>
-    </div>
-    <div class="transform-result">
-      <div class="result-item">
-        <div class="result-num">-8 kg</div>
-        <div class="result-label">Weight Lost</div>
-      </div>
-      <div class="result-item">
-        <div class="result-num">+40%</div>
-        <div class="result-label">Energy Level</div>
-      </div>
-      <div class="result-item">
-        <div class="result-num">30 days</div>
-        <div class="result-label">Time Taken</div>
-      </div>
-    </div>
-    <p class="transform-quote">"Diet plan bahut practical tha — ghar ka khana, koi protein shake nahi, koi supplement nahi. Results dekh ke meri family bhi shocked thi!"</p>
-  </div>
-
-  <div class="transform-card">
-    <div class="transform-header">
-      <div class="avatar">AM</div>
-      <div>
-        <p class="transform-name">Aarti Mishra</p>
-        <p class="transform-meta">Working Mom, 36 • MG Road, Gurugram</p>
-        <div class="stars">★★★★★</div>
-      </div>
-    </div>
-    <div class="transform-result">
-      <div class="result-item">
-        <div class="result-num">-15 kg</div>
-        <div class="result-label">Weight Lost</div>
-      </div>
-      <div class="result-item">
-        <div class="result-num">-8"</div>
-        <div class="result-label">Hip Size</div>
-      </div>
-      <div class="result-item">
-        <div class="result-num">60 days</div>
-        <div class="result-label">Time Taken</div>
-      </div>
-    </div>
-    <p class="transform-quote">"Post-pregnancy weight 2 saal se stuck tha. WhatsApp support ne mujhe motivated rakha. Best investment I ever made for myself!"</p>
+    <p class="transform-quote">"Mujhe pehle lagta tha yeh mere liye possible nahi hai. Sana ma'am ne mera confidence waapas diya. 4 months mein 12kg lose kiye — ab main apni purani sarees mein fit aa jaati hoon!"</p>
   </div>
 </section>
 
-<!-- INSTAGRAM HIGHLIGHTS -->
 <section class="section reveal">
   <p class="section-eyebrow">Follow My Journey</p>
   <h2 class="section-title">INSTAGRAM<br><em>HIGHLIGHTS</em></h2>
 
   <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 20px;">
-    <div class="insta-post" style="background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 12px; padding: 12px; text-align: center;">
-      <div style="width: 100%; height: 120px; background: linear-gradient(135deg, var(--gold), var(--gold-light)); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 24px;">📸</div>
+    <div style="background: var(--glass-bg); backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur); border: 1px solid var(--glass-border); border-radius: 16px; padding: 12px; text-align: center;">
+      <div style="width: 100%; height: 120px; background: linear-gradient(135deg, rgba(245,166,35,0.25), rgba(255,208,122,0.15)); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 24px; border: 1px solid var(--glass-border-gold);">📸</div>
       <p style="font-size: 12px; color: var(--muted); margin-top: 8px;">Client Transformation</p>
     </div>
-    <div class="insta-post" style="background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 12px; padding: 12px; text-align: center;">
-      <div style="width: 100%; height: 120px; background: linear-gradient(135deg, var(--gold), var(--gold-light)); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 24px;">💪</div>
+    <div style="background: var(--glass-bg); backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur); border: 1px solid var(--glass-border); border-radius: 16px; padding: 12px; text-align: center;">
+      <div style="width: 100%; height: 120px; background: linear-gradient(135deg, rgba(245,166,35,0.25), rgba(255,208,122,0.15)); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 24px; border: 1px solid var(--glass-border-gold);">💪</div>
       <p style="font-size: 12px; color: var(--muted); margin-top: 8px;">Workout Tips</p>
     </div>
-    <div class="insta-post" style="background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 12px; padding: 12px; text-align: center;">
-      <div style="width: 100%; height: 120px; background: linear-gradient(135deg, var(--gold), var(--gold-light)); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 24px;">🥗</div>
+    <div style="background: var(--glass-bg); backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur); border: 1px solid var(--glass-border); border-radius: 16px; padding: 12px; text-align: center;">
+      <div style="width: 100%; height: 120px; background: linear-gradient(135deg, rgba(245,166,35,0.25), rgba(255,208,122,0.15)); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 24px; border: 1px solid var(--glass-border-gold);">🥗</div>
       <p style="font-size: 12px; color: var(--muted); margin-top: 8px;">Healthy Recipes</p>
     </div>
   </div>
@@ -1119,12 +1163,10 @@
   <a href="https://www.instagram.com/sana_rajput_0001/" target="_blank" class="btn-ghost" style="margin-top: 20px;">Follow on Instagram</a>
 </section>
 
-<!-- PRICING -->
 <section class="section reveal" id="join">
   <p class="section-eyebrow">Simple Pricing</p>
-  <h2 class="section-title">JOIN TODAY &<br><em>SAVE BIG</em></h2>
+  <h2 class="section-title">JOIN TODAY &amp;<br><em>SAVE BIG</em></h2>
 
-  <!-- Featured plan -->
   <div class="pricing-card">
     <div class="pricing-badge">🔥 Best Value</div>
     <p class="pricing-plan">Most Popular</p>
@@ -1141,19 +1183,18 @@
       <li>Custom Indian Diet Plan</li>
       <li>Daily WhatsApp Support</li>
       <li>Weekly Progress Tracking</li>
-      <li>Group Yoga Classes (3x/week)</li>
+      <li>Glutes &amp; Core Sculpting Sessions</li>
       <li>Body Measurement Analysis</li>
       <li>Supplement Guidance (Free)</li>
       <li>Women-Only Batch</li>
     </ul>
 
-    <a href="https://wa.me/918800726551?text=Hi%20Sana%20Ma%27am%2C%20I%20want%20to%20join%20the%2030-Day%20Transformation%20Program!" class="btn-primary">
+    <a href="https://wa.me/918882555822?text=Hi%20Sana%20Ma%27am%2C%20I%20want%20to%20join%20the%2030-Day%20Transformation%20Program!" class="btn-primary">
       💪 Claim This Offer Now
     </a>
     <p class="btn-note">Only 7 spots left at this price</p>
   </div>
 
-  <!-- Other plans -->
   <div class="pricing-mini">
     <div>
       <p class="plan-name">3-Month Elite</p>
@@ -1171,7 +1212,6 @@
   </div>
 </section>
 
-<!-- RISK FREE GUARANTEE -->
 <div class="section reveal">
   <div class="risk-free">
     <div class="risk-icon">🛡️</div>
@@ -1182,35 +1222,32 @@
   </div>
 </div>
 
-<!-- FINAL BIG CTA -->
 <div class="section reveal">
-  <div style="background: linear-gradient(135deg, #1a1200, #231800); border: 1px solid rgba(245,166,35,0.3); border-radius: 24px; padding: 28px 24px; text-align: center; margin-bottom: 12px;">
+  <div style="background: rgba(255,255,255,0.03); backdrop-filter: var(--glass-blur-heavy); -webkit-backdrop-filter: var(--glass-blur-heavy); border: 1px solid var(--glass-border-gold); border-radius: 28px; padding: 28px 24px; text-align: center; margin-bottom: 12px; box-shadow: 0 20px 60px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.06);">
     <p style="font-family: 'Bebas Neue', sans-serif; font-size: 36px; color: #fff; line-height: 1; margin-bottom: 8px;">
       YOUR JOURNEY<br><span style="color: var(--gold);">STARTS TODAY</span>
     </p>
     <p style="font-size: 14px; color: #aaa; margin-bottom: 20px; line-height: 1.6;">
-      Join 500+ women who stopped making excuses and started making results.
+      Join 55+ women in Gurugram who stopped making excuses and started making results.
     </p>
-    <a href="https://wa.me/918800726551?text=Hi%20Sana%20Ma%27am%2C%20I%20want%20to%20start%20my%20FREE%20trial!" class="btn-primary" style="margin-bottom: 12px;">
+    <a href="https://wa.me/918882555822?text=Hi%20Sana%20Ma%27am%2C%20I%20want%20to%20start%20my%20FREE%20trial!" class="btn-primary" style="margin-bottom: 12px;">
       🚀 Start FREE Trial on WhatsApp
     </a>
-    <a href="tel:+918800726551" class="btn-ghost">📞 Call Sana Ma'am Directly</a>
+    <a href="tel:+918882555822" class="btn-ghost">📞 Call Sana Ma'am Directly</a>
     <p style="font-size: 12px; color: var(--muted); margin-top: 12px;">
       ✓ Free consultation &nbsp;•&nbsp; ✓ No joining fee &nbsp;•&nbsp; ✓ Start tomorrow
     </p>
   </div>
 </div>
 
-<!-- TRUST PILLS -->
 <div class="trust-bar reveal">
   <div class="trust-pill"><span>🔒</span> Secure Payment</div>
-  <div class="trust-pill"><span>🌟</span> 500+ Members</div>
-  <div class="trust-pill"><span>📍</span> Lucknow Based</div>
+  <div class="trust-pill"><span>🌟</span> 55+ Members</div>
+  <div class="trust-pill"><span>📍</span> Gurugram Based</div>
   <div class="trust-pill"><span>👩</span> Women Only</div>
   <div class="trust-pill"><span>✅</span> Certified Trainer</div>
 </div>
 
-<!-- FAQ -->
 <section class="section reveal">
   <p class="section-eyebrow">Got Questions?</p>
   <h2 class="section-title">FAQ</h2>
@@ -1220,7 +1257,7 @@
       Main beginner hoon, kya yeh mere liye hai?
       <span class="faq-icon">+</span>
     </div>
-    <p class="faq-a">Bilkul! Hamare programs specifically beginners ke liye design kiye gaye hain. Sana ma'am aapka level dekh ke plan customize karti hain.</p>
+    <p class="faq-a">Bilkul! Ruchika ne C-section aur knee injury ke baad baby steps se shuru kiya aur 5 months mein 8kg lose kiya. Sana ma'am aapka level dekh ke plan customize karti hain.</p>
   </div>
 
   <div class="faq-item">
@@ -1244,7 +1281,7 @@
       Results kitne time mein aate hain?
       <span class="faq-icon">+</span>
     </div>
-    <p class="faq-a">Most clients 2 weeks mein visible results dekhti hain. Full 30-day program mein average 8-12 kg weight loss hota hai proper consistency se.</p>
+    <p class="faq-a">Most clients 2–3 weeks mein visible results dekhti hain. Full 4-month program mein average 10–12 kg weight loss hota hai proper consistency se.</p>
   </div>
 
   <div class="faq-item">
@@ -1256,27 +1293,24 @@
   </div>
 </section>
 
-<!-- FOOTER -->
-<footer style="text-align: center; padding: 20px 20px 16px; border-top: 1px solid var(--card-border);">
+<footer style="text-align: center; padding: 20px 20px 16px; border-top: 1px solid var(--glass-border); background: rgba(255,255,255,0.02); backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur);">
   <p style="font-family: 'Bebas Neue', sans-serif; font-size: 20px; color: var(--gold); letter-spacing: 3px; margin-bottom: 6px;">SANA RAJPUT FITNESS</p>
   <p style="font-size: 12px; color: var(--muted);">Gurugram, Haryana &nbsp;•&nbsp; Women's Fitness Studio</p>
   <p style="font-size: 11px; color: #444; margin-top: 12px;">© 2025 Sana Rajput Fitness. All rights reserved.</p>
 </footer>
 
-<!-- STICKY BOTTOM CTA -->
 <div class="sticky-cta">
   <div class="sticky-inner">
     <div class="sticky-text">
       <p class="sticky-title">🔥 Limited Offer Ending Soon</p>
       <p class="sticky-sub">₹15,000/mo • Only 7 spots left</p>
     </div>
-    <a href="https://wa.me/918800726551?text=Hi%20Sana%20Ma%27am%2C%20I%20want%20to%20join!" class="sticky-btn">Join Now →</a>
+    <a href="https://wa.me/918882555822?text=Hi%20Sana%20Ma%27am%2C%20I%20want%20to%20join!" class="sticky-btn">Join Now →</a>
   </div>
 </div>
 
-<!-- WHATSAPP FLOAT -->
 <div class="wa-float">
-  <a href="https://wa.me/918800726551?text=Hi%20Sana%20Ma%27am%2C%20I%20want%20to%20know%20more%20about%20your%20program!" class="wa-btn" aria-label="Chat on WhatsApp">
+  <a href="https://wa.me/918882555822?text=Hi%20Sana%20Ma%27am%2C%20I%20want%20to%20know%20more%20about%20your%20program!" class="wa-btn" aria-label="Chat on WhatsApp">
     <svg viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
       <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
     </svg>
@@ -1284,10 +1318,8 @@
 </div>
 
 <script>
-// ── COUNTDOWN TIMER ──
 (function() {
   const endTime = new Date().getTime() + (8 * 3600 + 34 * 60 + 12) * 1000;
-
   function update() {
     const now = new Date().getTime();
     const diff = Math.max(0, endTime - now);
@@ -1299,23 +1331,17 @@
     document.getElementById('cd-s').textContent = String(s).padStart(2, '0');
     if (diff > 0) requestAnimationFrame(() => setTimeout(update, 1000));
   }
-
   update();
 })();
 
-// ── SPOTS COUNTER (social proof) ──
 (function() {
   let spots = 7;
   const el = document.getElementById('spots-left');
   setInterval(() => {
-    if (spots > 2 && Math.random() < 0.15) {
-      spots--;
-      el.textContent = spots;
-    }
+    if (spots > 2 && Math.random() < 0.15) { spots--; el.textContent = spots; }
   }, 45000);
 })();
 
-// ── FAQ TOGGLE ──
 function toggleFaq(el) {
   const item = el.closest('.faq-item');
   const isOpen = item.classList.contains('open');
@@ -1323,15 +1349,11 @@ function toggleFaq(el) {
   if (!isOpen) item.classList.add('open');
 }
 
-// ── SCROLL REVEAL ──
 (function() {
   const els = document.querySelectorAll('.reveal');
   const obs = new IntersectionObserver((entries) => {
     entries.forEach(e => {
-      if (e.isIntersecting) {
-        e.target.classList.add('visible');
-        obs.unobserve(e.target);
-      }
+      if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
     });
   }, { threshold: 0.08 });
   els.forEach(el => obs.observe(el));
